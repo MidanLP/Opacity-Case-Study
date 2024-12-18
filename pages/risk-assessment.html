@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Risk Assessment</title>
 </head>
+ <script>
+    function measureAccessTime(url,callback) {
+        return new Promise((resolve) => {
+            var startTime = performance.now();
+            var img = new Image(); //image object, that is only loaded in the background
+            img.onload = img.onerror = function() {
+                var endTime = performance.now(); //performace to get a high resolution time stamp
+                resolve(endTime-startTime);
+            };
+            img.src = url + "?cache_buster=" + new Date().getTime(); //used to ensure, that our comparitive time value has not been affected by caching: https://absmartly.com/blog/what-is-cache-buster
+        });
+    }
+    async function isPageVisited() { //async 
+        var time = await measureAccessTime(url); //uses the upper function
+        alert(time);
+        if (time < 100) {
+            alert("Page is visited");
+        } else {
+            alert("Page is not visited");
+        }
+    }
+    isPageVisited();
+
+</script>
 <body>
     <header>
         <h1>Risk Assessment</h1>
