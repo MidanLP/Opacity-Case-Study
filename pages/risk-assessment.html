@@ -6,24 +6,35 @@
     <title>Risk Assessment</title>
 </head>
  <script>
-    function measureAccessTime(url,callback) {
+    function measureAccessTime(url) {
         return new Promise((resolve) => {
             var startTime = performance.now();
             var img = new Image(); //image object, that is only loaded in the background
-            img.onload = img.onerror = function() {
+            img.onload = function() {
                 var endTime = performance.now(); //performace to get a high resolution time stamp
-                resolve(endTime-startTime);
+                var dif = endTime - startTime;
+                resolve(dif);
             };
-            img.src = url + "?cache_buster=" + new Date().getTime(); //used to ensure, that our comparitive time value has not been affected by caching: https://absmartly.com/blog/what-is-cache-buster
+            // Onerror event (when image fails to load)
+            img.onerror = function() {
+                console.log("Error loading image: " + url);
+                reject("Error loading image: " + url);  // Reject the promise if image fails to load
+            };
+            img.src = url 
         });
     }
+     // + "?cache_buster=" + Math.random(); //used to ensure, that our comparitive time value has not been affected by caching: https://absmartly.com/blog/what-is-cache-buster
+
     async function isPageVisited() { //async 
-        var time = await measureAccessTime(url); //uses the upper function
-        alert(time);
-        if (time < 100) {
-            alert("Page is visited");
+        var time = await measureAccessTime("http://localhost:8001/parachute.jpeg"); //uses the upper function //should i use the absolute path?
+        //var difference = referenceTime - time;
+        //console.log("ref= " + referenceTime);
+        console.log("time="+ time);
+        //console.log(difference);
+        if (time < 60) {
+            console.log("Page is visited");
         } else {
-            alert("Page is not visited");
+            console.log("Page is not visited");
         }
     }
     isPageVisited();
