@@ -1,8 +1,12 @@
 import subprocess
+import os
 
-# Paths to scripts
-script1 = r"C:\Users\nadim\Desktop\Bach\Website\Opacity-Case-Study\Parachute\para_server.py"
-script2 = r"C:\Users\nadim\Desktop\Bach\Website\Opacity-Case-Study\Healthcare\health_server.py"
+# Get the directory of the current script
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Relative paths to scripts
+script1 = os.path.join(current_dir, "Case-Study", "Parachute", "para_server.py")
+script2 = os.path.join(current_dir, "Case-Study", "Healthcare", "health_server.py")
 
 # Run both scripts in parallel
 process1 = subprocess.Popen(["python", script1], shell=True)
