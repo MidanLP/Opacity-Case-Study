@@ -1,1 +1,0 @@
-# Opacity-Case-Study
