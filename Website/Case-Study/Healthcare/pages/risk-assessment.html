@@ -7,13 +7,17 @@
 </head>
  <script>
     var time = -1; //global time value
+    var differece = -1; 
     function measureAccessTime(url) { //function to mesure image loading times
         return new Promise((resolve) => {
             var startTime = performance.now();
+            var startingTime = date.now();
             var img = new Image(); //image object, that is only loaded in the background
             img.onload = function() {
                 var endTime = performance.now(); //performace to get a high resolution time stamp
+                var endingTime = date.now();
                 var dif = endTime - startTime;
+                 differece = endingTime - startingTime;
                 resolve(dif);
             };
             // Onerror event (when image fails to load)

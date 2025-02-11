@@ -1,8 +1,8 @@
 import subprocess
 
 # Paths to scripts
-script1 = r"C:\Users\nadim\Desktop\Bach\Website\Case-Study\Parachute\para_server.py"
-script2 = r"C:\Users\nadim\Desktop\Bach\Website\Case-Study\Healthcare\health_server.py"
+script1 = r"C:\Users\nadim\Desktop\Bach\Website\Opacity-Case-Study\Parachute\para_server.py"
+script2 = r"C:\Users\nadim\Desktop\Bach\Website\Opacity-Case-Study\Healthcare\health_server.py"
 
 # Run both scripts in parallel
 process1 = subprocess.Popen(["python", script1], shell=True)
