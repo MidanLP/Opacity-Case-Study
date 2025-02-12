@@ -30,7 +30,7 @@ def clear(): # function to clear browser cache
     })
     print("Cache, cookies, and storage cleared.")
 
-def test(): #try to extract time value from webpage
+def test(): # try to extract time value from webpage
     try:
         time_value = driver.execute_script("return time;")  
         print(f"Time value extracted from webpage: {time_value}")
@@ -44,7 +44,7 @@ def test(): #try to extract time value from webpage
 
     time.sleep(0.8)
 
-def testNoCache(): #try to extract time value from webpage
+def testNoCache(): # try to extract time value from webpage
     try:
         time_value = driver.execute_script("return time;")  
         print(f"Time value extracted from webpage: {time_value}")
@@ -61,14 +61,14 @@ def testNoCache(): #try to extract time value from webpage
 
 time.sleep(2)
 
-try:#open the risk assessment page, from the main page
+try:# open the risk assessment page, from the main page
     link = driver.find_element(By.LINK_TEXT, "Risk Assessment")
     link.click()  
     print("Link clicked successfully!")
 except Exception as e:
     print(f"Error: {e}")
 
-testtimes = 1000 #number of tests to run
+testtimes = 1000 # number of tests to run
 try:
     time_value = driver.execute_script("return time;")  #gives back the time value
     print(f"Time value extracted from webpage: {time_value}")
@@ -81,7 +81,7 @@ except Exception as e:
     print(f"Error: {e}")
 
 clear()
-for i in range(testtimes):#main loop, repeat "testimes" amount of times
+for i in range(testtimes):# main loop, repeat "testimes" amount of times
     driver.refresh()
     time.sleep(6)
 
