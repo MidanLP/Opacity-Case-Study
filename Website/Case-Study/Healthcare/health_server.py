@@ -1,14 +1,16 @@
 import http.server
 import socketserver
+import os
 
-# Set the port to 8000 (you can change it if needed)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 PORT = 8000
 
-# Create a handler that serves files from the current directory
 Handler = http.server.SimpleHTTPRequestHandler
 
-# Create the server with the specified port and handler
+os.chdir(script_dir)
+
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
-    print(f"Serving HTTP on port {PORT}...")
+    print(f"Serving HTTP on port {PORT}... from {script_dir}")
     # Run the server indefinitely
     httpd.serve_forever()

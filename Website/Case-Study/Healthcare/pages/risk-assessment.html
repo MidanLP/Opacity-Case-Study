@@ -7,17 +7,13 @@
 </head>
  <script>
     var time = -1; //global time value
-    var differece = -1; 
     function measureAccessTime(url) { //function to mesure image loading times
-        return new Promise((resolve) => {
-            var startTime = performance.now();
-            var startingTime = date.now();
+        return new Promise((resolve, reject) => {
             var img = new Image(); //image object, that is only loaded in the background
+            var startTime = performance.now();
             img.onload = function() {
                 var endTime = performance.now(); //performace to get a high resolution time stamp
-                var endingTime = date.now();
                 var dif = endTime - startTime;
-                 differece = endingTime - startingTime;
                 resolve(dif);
             };
             // Onerror event (when image fails to load)
@@ -31,15 +27,19 @@
      // + "?cache_buster=" + Math.random(); //used to ensure, that our comparitive time value has not been affected by caching: https://absmartly.com/blog/what-is-cache-buster
 
     async function isPageVisited() { //async 
+        try{
+            var time = await measureAccessTime("http://localhost:8001/parachute.jpeg"); //link to the image on the other website
+            time = Math.round(time,2); //round to 2 dec. places
+            //var bust = await measureAccessTime("http://localhost:8001/parachute.jpeg?cache_buster=" + Math.random());
+            console.log("time="+ time);
 
-        time = await measureAccessTime("http://localhost:8001/parachute.jpeg"); //link to the image on the other website
-        //var bust = await measureAccessTime("http://localhost:8001/parachute.jpeg?cache_buster=" + Math.random());
-        console.log("time="+ time);
-
-        if (time < 100){
-            console.log("Page is visited");
-        } else {
-            console.log("Page is not visited");
+            if (time < 100){
+                console.log("Page is visited");
+            } else {
+                console.log("Page is not visited");
+            }
+        } catch (error) {
+            console.log("Error: " + error);
         }
     }
     isPageVisited();

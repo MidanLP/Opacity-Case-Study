@@ -23,16 +23,12 @@ driver.get("http://healthcare.local:8080/pages/risk-assessment.html")
 
 def clear(): # function to clear browser cache
     print("Clearing the browser cache and cookies...")
-    driver.execute_script("""
-        document.cookie.split(";").forEach(function(c) {
-            document.cookie = c.trim().split("=")[0] + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
-        });
-
-        window.localStorage.clear();
-        window.sessionStorage.clear();
-    
-        console.log("Cache, cookies, and storage cleared.");
-    """)
+    driver.execute_cdp_cmd('Network.clearBrowserCache', {})
+    driver.execute_cdp_cmd('Storage.clearDataForOrigin', {
+        "origin": "*",
+        "storageTypes": "cookies,local_storage,session_storage"
+    })
+    print("Cache, cookies, and storage cleared.")
 
 def test(): #try to extract time value from webpage
     try:
@@ -48,15 +44,15 @@ def test(): #try to extract time value from webpage
 
     time.sleep(0.8)
 
-def testCache(): #try to extract time value from webpage
+def testNoCache(): #try to extract time value from webpage
     try:
         time_value = driver.execute_script("return time;")  
         print(f"Time value extracted from webpage: {time_value}")
     
-        with open('time_output_server.txt', 'a') as f:
+        with open('time_output_noCache.txt', 'a') as f:
             f.writelines(f"Time value: {time_value}\n")
 
-        print("Time value written to time_output.txt")
+        print("Time value written to time_output_noCache.txt")
     except Exception as e:
         print(f"Error: {e}")
 
@@ -77,17 +73,21 @@ try:
     time_value = driver.execute_script("return time;")  #gives back the time value
     print(f"Time value extracted from webpage: {time_value}")
     
-    with open('time_output.txt', 'a') as f:
+    with open('time_output_noCache.txt', 'a') as f:
         f.writelines(f"Testing_Amount:{testtimes}, Date: {datetime.now().strftime("%d/%m/%Y %H:%M:%S")} \n") #write the time 
 
     print("Text Header made")
 except Exception as e:
     print(f"Error: {e}")
 
+clear()
 for i in range(testtimes):#main loop, repeat "testimes" amount of times
-    clear()
     driver.refresh()
-    test()
+    time.sleep(6)
+
+    clear()
+    time.sleep(3)
+    #testNoCache()
 
 
 driver.quit() # Close browser
