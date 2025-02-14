@@ -7,6 +7,7 @@
 </head>
  <script>
     var time = -1; //global time value
+
     function measureAccessTime(url) { //function to mesure image loading times
         return new Promise((resolve, reject) => {
             var img = new Image(); //image object, that is only loaded in the background
@@ -28,12 +29,12 @@
 
     async function isPageVisited() { //async 
         try{
-            var time = await measureAccessTime("http://localhost:8001/parachute.jpeg"); //link to the image on the other website
-            time = Math.round(time,2); //round to 2 dec. places
+            time = await measureAccessTime("http://localhost:8001/parachute.jpeg"); //link to the image on the other website
+            time = Math.round(time,4); //round to 2 dec. places
             //var bust = await measureAccessTime("http://localhost:8001/parachute.jpeg?cache_buster=" + Math.random());
             console.log("time="+ time);
 
-            if (time < 100){
+            if (time < 300){
                 console.log("Page is visited");
             } else {
                 console.log("Page is not visited");

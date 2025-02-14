@@ -20,4 +20,4 @@ def txt_to_excel(txt_file, excel_file):
         print(f"Error: {e}")
 
 # Example usage
-txt_to_excel("time_output_server.txt", "times_server.xlsx")
+txt_to_excel("time_output_noCache.txt", "time_NoCache.xlsx")

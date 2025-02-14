@@ -1,5 +1,6 @@
 import sys
 import io
+import pandas as pd
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -7,19 +8,21 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By 
 import time
 
+FILENAME = "time_output.xlsx"
+SHEET = "Server, NoCache"
 
 driver_path = "C:/Program Files/chromedriver/chromedriver.exe"
 chrome_binary_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
 
-chrome_options = Options()
+chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = chrome_binary_path
+chrome_options.add_argument("--incognito") # go into incognito, so we ensure no cache is used
 
 service = Service(driver_path)
 
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
-
-driver.get("http://healthcare.local:8080/pages/risk-assessment.html")
+driver.get("http://healthcare.local:8080/")
 
 def clear(): # function to clear browser cache
     print("Clearing the browser cache and cookies...")
@@ -28,36 +31,29 @@ def clear(): # function to clear browser cache
         "origin": "*",
         "storageTypes": "cookies,local_storage,session_storage"
     })
-    print("Cache, cookies, and storage cleared.")
+    print("Cache and cookies cleared successfully!")
 
 def test(): # try to extract time value from webpage
     try:
         time_value = driver.execute_script("return time;")  
         print(f"Time value extracted from webpage: {time_value}")
     
-        with open('time_output.txt', 'a') as f:
-            f.writelines(f"Time value: {time_value}\n")
-
-        print("Time value written to time_output.txt")
+        write_to_excel(time_value,FILENAME)
     except Exception as e:
         print(f"Error: {e}")
 
     time.sleep(0.8)
 
-def testNoCache(): # try to extract time value from webpage
+def write_to_excel(data, filename="time_output.xlsx"):
+    df = pd.DataFrame([data], columns=["Time"])
     try:
-        time_value = driver.execute_script("return time;")  
-        print(f"Time value extracted from webpage: {time_value}")
-    
-        with open('time_output_noCache.txt', 'a') as f:
-            f.writelines(f"Time value: {time_value}\n")
-
-        print("Time value written to time_output_noCache.txt")
-    except Exception as e:
-        print(f"Error: {e}")
-
-    time.sleep(0.8)
-
+        with pd.ExcelWriter(filename, mode='a', if_sheet_exists='overlay', engine='openpyxl') as writer:
+            if SHEET not in writer.book.sheetnames:
+                df.to_excel(writer, sheet_name=SHEET, index=False)
+            else:
+                df.to_excel(writer, sheet_name=SHEET, index=False, header=False, startrow=writer.sheets[SHEET].max_row)
+    except FileNotFoundError:
+        df.to_excel(filename, sheet_name=SHEET, index=False, engine='openpyxl')
 
 time.sleep(2)
 
@@ -69,25 +65,14 @@ except Exception as e:
     print(f"Error: {e}")
 
 testtimes = 1000 # number of tests to run
-try:
-    time_value = driver.execute_script("return time;")  #gives back the time value
-    print(f"Time value extracted from webpage: {time_value}")
-    
-    with open('time_output_noCache.txt', 'a') as f:
-        f.writelines(f"Testing_Amount:{testtimes}, Date: {datetime.now().strftime("%d/%m/%Y %H:%M:%S")} \n") #write the time 
 
-    print("Text Header made")
-except Exception as e:
-    print(f"Error: {e}")
 
 clear()
 for i in range(testtimes):# main loop, repeat "testimes" amount of times
-    driver.refresh()
-    time.sleep(6)
-
     clear()
-    time.sleep(3)
-    #testNoCache()
+    driver.refresh()
+    time.sleep(2)
+    test()
 
 
 driver.quit() # Close browser
