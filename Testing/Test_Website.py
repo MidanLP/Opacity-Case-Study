@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 import time
 
 FILENAME = "time_output.xlsx"
-SHEET = "Server, NoCache"
+SHEET = "Server, Cache"
 
 driver_path = "C:/Program Files/chromedriver/chromedriver.exe"
 chrome_binary_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
@@ -67,11 +67,9 @@ except Exception as e:
 testtimes = 1000 # number of tests to run
 
 
-clear()
 for i in range(testtimes):# main loop, repeat "testimes" amount of times
-    clear()
     driver.refresh()
-    time.sleep(2)
+    time.sleep(1)
     test()
 
 
