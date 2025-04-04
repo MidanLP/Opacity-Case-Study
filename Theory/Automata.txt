@@ -1,0 +1,22 @@
+{
+    "clocks": 1,
+    "states":
+    [
+        {"name": "init", "initial": true,   "accepting": false, "secret": false},
+        {"name": "Risk", "initial": false,  "accepting": false, "secret": false},
+        {"name": "InitContainer", "initial": false,  "accepting": false, "secret": false},
+        {"name": "ConImage", "initial": false,  "accepting": false, "secret": false},
+        {"name": "ImageLoad", "initial": false,  "accepting": false, "secret": false},
+        {"name": "ImageDisplay", "initial": false,  "accepting": false, "secret": false},
+        {"name": "Cached", "initial": false,  "accepting": false, "secret": true},
+        {"name": "Uncached", "initial": false,  "accepting": false, "secret": false},
+        {"name": "HighRisk", "initial": false,  "accepting": true,  "secret": true},
+        {"name": "LowRisk", "initial": false,  "accepting": true,  "secret": false},
+        
+    ],
+    "transitions":
+    [
+        {"origin": "init" , "symbol": "aut"  , "guards": [{"clock": 0, "lower": 0, "upper": 2}], "resets": [],  "target": "Risk-Assessment"},
+    
+    ]
+}
