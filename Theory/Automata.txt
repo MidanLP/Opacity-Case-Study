@@ -17,6 +17,6 @@
     "transitions":
     [
         {"origin": "init" , "symbol": "aut"  , "guards": [{"clock": 0, "lower": 0, "upper": 2}], "resets": [],  "target": "Risk-Assessment"},
-    
+        
     ]
 }
