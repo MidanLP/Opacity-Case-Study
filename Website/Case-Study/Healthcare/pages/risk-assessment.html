@@ -13,7 +13,7 @@
             var img = new Image(); //image object, that is only loaded in the background
             var startTime = performance.now();
             img.onload = function() {
-                var endTime = performance.now(); //performace to get a high resolution time stamp
+                var endTime = performance.now(); //performance to get a high resolution time stamp
                 var dif = endTime - startTime;
                 resolve(dif);
             };
