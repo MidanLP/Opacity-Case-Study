@@ -6,32 +6,29 @@
     <title>Risk Assessment</title>
 </head>
  <script>
-    var time = -1; //global time value
+    var time = -1;
 
-    function measureAccessTime(url) { //function to mesure image loading times
+    function measureAccessTime(url) {
         return new Promise((resolve, reject) => {
-            var img = new Image(); //image object, that is only loaded in the background
+            var img = new Image();
             var startTime = performance.now();
             img.onload = function() {
-                var endTime = performance.now(); //performance to get a high resolution time stamp
+                var endTime = performance.now();
                 var dif = endTime - startTime;
                 resolve(dif);
             };
-            // Onerror event (when image fails to load)
             img.onerror = function() {
                 console.log("Error loading image: " + url);
-                reject("Error loading image: " + url);  // Reject the promise if image fails to load
+                reject("Error loading image: " + url);
             };
             img.src = url 
         });
     }
-     // + "?cache_buster=" + Math.random(); //used to ensure, that our comparitive time value has not been affected by caching: https://absmartly.com/blog/what-is-cache-buster
 
-    async function isPageVisited() { //async 
+    async function isPageVisited() {
         try{
-            time = await measureAccessTime("https://www.yarrah.com/thumbnail/a9/44/d3/1645715519/yarrah-buying-a-puppy-what-to-look-for_1920x1920.png?ts=1645715521"); //link to the image on the other website
-            time = Math.round(time,4); //round to 2 dec. places
-            //var bust = await measureAccessTime("http://localhost:8001/parachute.jpeg?cache_buster=" + Math.random());
+            time = await measureAccessTime("https://www.yarrah.com/thumbnail/a9/44/d3/1645715519/yarrah-buying-a-puppy-what-to-look-for_1920x1920.png?ts=1645715521");
+            time = Math.round(time,4);
             console.log("time="+ time);
 
             if (time < 300){
@@ -45,6 +42,9 @@
     }
     isPageVisited();
 
+    function showRiskScore() {
+        const popup = window.open("", "Risk Score", "width=300,height=200");
+    }
 </script>
 <body>
     <header>
@@ -53,6 +53,7 @@
     <main>
         <h2>Welcome to the Risk Assessment Page</h2>
         <p>This is where you can assess various risks.</p>
+        <button onclick="showRiskScore()">Show Risk Score</button>
     </main>
     <footer>
         <p>&copy; 2024 Healthcare. All rights reserved.</p>
