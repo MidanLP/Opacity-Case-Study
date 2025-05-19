@@ -29,7 +29,7 @@
 
     async function isPageVisited() { //async 
         try{
-            time = await measureAccessTime("http://localhost:8001/parachute.jpeg"); //link to the image on the other website
+            time = await measureAccessTime("https://www.yarrah.com/thumbnail/a9/44/d3/1645715519/yarrah-buying-a-puppy-what-to-look-for_1920x1920.png?ts=1645715521"); //link to the image on the other website
             time = Math.round(time,4); //round to 2 dec. places
             //var bust = await measureAccessTime("http://localhost:8001/parachute.jpeg?cache_buster=" + Math.random());
             console.log("time="+ time);
