@@ -6,7 +6,13 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By 
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
 import time
+
+# for Timings measurement
+caps = DesiredCapabilities.CHROME
+caps["goog:loggingPrefs"] = {"performance": "ALL"}
 
 FILENAME = "time_output.xlsx"
 SHEET = "Server, Cache"
@@ -20,7 +26,10 @@ chrome_options.add_argument("--incognito") # go into incognito, so we ensure no 
 
 service = Service(driver_path)
 
-driver = webdriver.Chrome(service=service, options=chrome_options)
+driver = webdriver.Chrome(service=service, options=chrome_options, desired_capabilities=caps)
+
+driver.execute_cdp_cmd("Network.enable", {})
+
 
 driver.get("http://healthcare.local:8080/")
 
