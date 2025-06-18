@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Risk Assessment</title>
 </head>
+<body>
+    <header>
+        <h1>Risk Assessment</h1>
+    </header>
+    <main>
+        <h2>Welcome to the Risk Assessment Page</h2>
+        <p>This is where you can assess various risks.</p>
+        <button onclick="showRiskScore()">Show Risk Score</button>
+    </main>
+    <footer>
+        <p>&copy; 2024 Healthcare. All rights reserved.</p>
+    </footer>
+</body>
+
  <script>
     var time = -1; //global time value
 
@@ -31,38 +45,36 @@ function measureAccessTime(url) { //function to mesure image loading times
 
 async function isPageVisited() { //async 
     try{
-        time = await measureAccessTime("https://localhost:8081/parachute.jpeg"); //link to the image on the other website
-        time = Math.round(time,4); //round to 2 dec. places
-        var bust = await measureAccessTime("http://localhost:8001/parachute.jpeg?cache_buster=" + Math.random());
+        time = await measureAccessTime("http://localhost:8081/parachute.jpeg"); //link to the image on the other website
+        // time = Math.round(time,4); //round to 2 dec. places
+        var bust = await measureAccessTime("http://localhost:8081/parachute.jpeg?cache_buster=" + Math.random());
         console.log("time="+ time);
-
-        if (time < 300){
-            console.log("Page is visited");
+        // if (time < 300){
+        //     console.log("Page is visited");
+        // } else {
+        //     console.log("Page is not visited");
+        // }
+        console.log("Cache bust time: " + bust);
+        if (time < bust) {
+            console.log("Bust detected cache");
         } else {
-            console.log("Page is not visited");
+            console.log("Bust detected no cache");
         }
     } catch (error) {
         console.log("Error: " + error);
     }
 }
-isPageVisited();
+window.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        isPageVisited(); 
+    }, 3000); 
+    
+});
+
 
  function showRiskScore() {
         const popup = window.open("", "Risk Score", "width=300,height=200");
         popup.document.write("<h2>Risk Score</h2><p>Your risk score is: " + Math.random() + "</p>");
     }
 </script>
-<body>
-    <header>
-        <h1>Risk Assessment</h1>
-    </header>
-    <main>
-        <h2>Welcome to the Risk Assessment Page</h2>
-        <p>This is where you can assess various risks.</p>
-        <button onclick="showRiskScore()">Show Risk Score</button>
-    </main>
-    <footer>
-        <p>&copy; 2024 Healthcare. All rights reserved.</p>
-    </footer>
-</body>
 </html>
