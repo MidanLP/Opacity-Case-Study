@@ -28,14 +28,14 @@ function measureAccessTime(url) { //function to mesure image loading times
     return new Promise((resolve, reject) => {
         var img = new Image(); //image object, that is only loaded in the background
         var startTime = performance.now();
-        img.onload = function() {
+        img.onload = function() { // perform Action when image is fully loaded
             var endTime = performance.now(); //performance to get a high resolution time stamp
-            var dif = endTime - startTime;
-            resolve(dif);
+            var dif = endTime - startTime; //calculate the difference between start and end time
+            resolve(dif); // Resolve the promise with the time taken to load the image
         };
         // Onerror event (when image fails to load)
         img.onerror = function() {
-            console.log("Error loading image: " + url);
+            console.log("Error loading image: " + url); // Log the error message
             reject("Error loading image: " + url);  // Reject the promise if image fails to load
         };
         img.src = url 
@@ -49,13 +49,8 @@ async function isPageVisited() { //async
         // time = Math.round(time,4); //round to 2 dec. places
         var bust = await measureAccessTime("http://localhost:8081/parachute.jpeg?cache_buster=" + Math.random());
         console.log("time="+ time);
-        // if (time < 300){
-        //     console.log("Page is visited");
-        // } else {
-        //     console.log("Page is not visited");
-        // }
         console.log("Cache bust time: " + bust);
-        if (time < bust) {
+        if (time < bust) { //if the time is less than the bust time, then the image was loaded from cache
             console.log("Bust detected cache");
         } else {
             console.log("Bust detected no cache");
@@ -64,11 +59,10 @@ async function isPageVisited() { //async
         console.log("Error: " + error);
     }
 }
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => { // Wait for the DOM to be fully loaded, then wait for 3 more seconds
     setTimeout(() => {
-        isPageVisited(); 
+        isPageVisited(); //call the covert function to measure the access time of the image
     }, 3000); 
-    
 });
 
 
