@@ -158,13 +158,21 @@ try:# open the risk assessment page, from the main page
 except Exception as e:
     print(f"Error: {e}")
 
-testtimes = 10 # number of tests to run
+while True:
+    try:
+        testtimes = int(input("How many times do you want to test? (default 1): ") or 1)
+        if testtimes <= 0:
+            print("Please enter a positive integer.")
+            continue
+        break
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
 
 
 for i in range(testtimes):# main loop, repeat "testimes" amount of times
     clear()
     driver.refresh()
-    time.sleep(1)
+    time.sleep(4)
     test()
 
 
