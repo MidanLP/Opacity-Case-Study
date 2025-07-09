@@ -8,12 +8,15 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By 
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-
 import time
 
-# for Timings measurement
-caps = DesiredCapabilities.CHROME
-caps["goog:loggingPrefs"] = {"performance": "ALL"}
+## This script is the main testing script for the healthcare website, which is running on localhost:8080.
+## It automates the process of testing the website, extracting timings for the loading of the parachute.png, and writing the results to an Excel file.
+
+
+
+caps = DesiredCapabilities.CHROME 
+caps["goog:loggingPrefs"] = {"performance": "ALL"} # for Timings measurement
 
 FILENAME = "time_output.xlsx" #File to be written to
 SHEET = "Testing Timings" # Sheet in the file to be written to
@@ -23,7 +26,7 @@ chrome_binary_path = "C:/Program Files/Google/Chrome/Application/chrome.exe" # P
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = chrome_binary_path
-chrome_options.add_argument("--incognito") # go into incognito, so we ensure no cache is used
+#chrome_options.add_argument("--incognito") # go into incognito, so we ensure no cache is used
 
 service = Service(driver_path)
 
@@ -65,7 +68,7 @@ def test(): # try to extract time value from webpage
     except Exception as e:
         print(f"Error while getting network timings: {e}")    
     write_to_excel(row, FILENAME, ["Time", "Queued", "Stalled", "DNS Lookup", "Initial Connection", "SSL", "Request Sent", "Waiting", "Download"])
-    time.sleep(40)
+    time.sleep(10)
 
 # Attempt to automate the timing extraction process, opposed to manual testing and noting of timings 
 def get_network_timings(target_url_substring): # function to get network timings for a specific resource (parachute.jpeg in this case)from the Resource Timing API as described in
@@ -188,11 +191,11 @@ except Exception as e:
 
 for i in range(testtimes):# main loop, repeat "testimes" amount of times
     print(f"Test iteration {i + 1} of {testtimes}")
-    if clear_cache_bool:
+    if clear_cache_bool: # if user wants a clear cache
         clear()
-    driver.refresh()
+    driver.refresh() 
     time.sleep(4)
-    test()
+    test() # actual test function
 
 
 driver.quit() # Close browser
