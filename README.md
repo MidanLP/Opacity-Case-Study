@@ -24,8 +24,8 @@ This project supports the case study and practical evaluation for the thesis **"
 | File / Script                    | Description                                                                                  |
 | -------------------------------- | -------------------------------------------------------------------------------------------- |                 
 | `runWebsites.py`                 | Backup scipt to launch both web servers through python (not recomended, see Setup).          |
-| `health_server.py`               | ackend for the Healthcare system.                                                            |
-| `para_server.py`                 | backend for the Parachute system.                                                      |
+| `health_server.py`               | backend for the Healthcare system.                                                           |
+| `para_server.py`                 | backend for the Parachute system.                                                            | 
 | `index.html` (under each system) | Frontend interface for the respective case study applications.                               |
 | `createBoxplot.py`               | Generates performance comparison plots from recorded timing data.                            |
 | `Test_Website.py`                | Used to programmatically test server response and simulate client behavior.                  |
@@ -42,3 +42,12 @@ To view the case study:
 1. Clone the repository:
    ```bash
    git clone https://github.com/MidanLP/Opacity-Case-Study.git
+
+
+##  Dependencies
+Testing: 
+
+-Python
+-Pandas
+-Selenium Webdriver (Chrome)
+-Mathplot lib

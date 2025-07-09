@@ -46,7 +46,6 @@ function measureAccessTime(url) { //function to mesure image loading times
 async function isPageVisited() { //async 
     try{
         time = await measureAccessTime("http://localhost:8081/parachute.jpeg"); //link to the image on the other website
-        // time = Math.round(time,4); //round to 2 dec. places
         var bust = await measureAccessTime("http://localhost:8081/parachute.jpeg?cache_buster=" + Math.random()); //mesure cache bust time, used as baseline for comparison
         console.log("time="+ time);
         console.log("Cache bust time: " + bust);
@@ -66,7 +65,7 @@ window.addEventListener("DOMContentLoaded", () => { // Wait for the DOM to be fu
 });
 
 
- function showRiskScore() {
+ function showRiskScore() { // Function to show risk score in a popup
         const popup = window.open("", "Risk Score", "width=300,height=200");
         popup.document.write("<h2>Risk Score</h2><p>Your risk score is: " + Math.random() + "</p>");
     }
