@@ -23,7 +23,7 @@ This project supports the case study and practical evaluation for the thesis **"
 
 | File / Script                    | Description                                                                                  |
 | -------------------------------- | -------------------------------------------------------------------------------------------- |                 
-| `runWebsites.py`                 | Backup scipt to launch both web servers through python (not recomended, see Setup).          |
+| `runWebsites.py`                 | Backup script to launch both web servers through python (not recomended, see Setup).         |
 | `health_server.py`               | backend for the Healthcare system.                                                           |
 | `para_server.py`                 | backend for the Parachute system.                                                            | 
 | `index.html` (under each system) | Frontend interface for the respective case study applications.                               |
@@ -35,7 +35,7 @@ This project supports the case study and practical evaluation for the thesis **"
 | `time_output.xlsx`               | Final formatted timing results, used in Table \ref{tab\:case\_study\_results} of the thesis. |
 
 
-##  Getting Started
+##  Setup
 
 To view the case study:
 
