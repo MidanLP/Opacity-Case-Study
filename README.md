@@ -118,6 +118,8 @@ sudo systemctl restart apache2
 ```
 
 ### Backup 
+Incase onyl a quick testing and setup is required, the script runWebsites.py (see Project Structure) could be used as a backup to set up the servers easily 
+(this is not recommended, as the timing results will be most accurate if websites are hosted by Apache)
 ```
 python .\Website\runWebsites.py    
 ```
