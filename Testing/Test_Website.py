@@ -2,6 +2,7 @@ import json
 import sys
 import io
 import pandas as pd
+from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -19,24 +20,30 @@ caps = DesiredCapabilities.CHROME
 caps["goog:loggingPrefs"] = {"performance": "ALL"} # for Timings measurement
 
 FILENAME = "time_output.xlsx" #File to be written to
-SHEET = "Testing Timings" # Sheet in the file to be written to
+SHEET = "Testing Timings" #Sheet in the file to be written to
 
-driver_path = "C:/Program Files/chromedriver/chromedriver.exe" # Path to your ChromeDriver executable (standard)
-chrome_binary_path = "C:/Program Files/Google/Chrome/Application/chrome.exe" # Path to your Chrome browser executable (standard)
+driver_path = "C:/Program Files/chromedriver/chromedriver.exe" #Path to your ChromeDriver executable (standard)
+chrome_binary_path = "C:/Program Files/Google/Chrome/Application/chrome.exe" #Path to your Chrome browser executable (standard)
 
-chrome_options = webdriver.ChromeOptions()
+chrome_options = Options()
 chrome_options.binary_location = chrome_binary_path
-#chrome_options.add_argument("--incognito") # go into incognito, so we ensure no cache is used
+#chrome_options.add_argument("--incognito") #go into incognito, so we ensure no cache is used
 
 service = Service(driver_path)
 
 chrome_options.set_capability("goog:loggingPrefs", {"performance": "ALL"}) 
-driver = webdriver.Chrome(service=service, options=chrome_options)
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-driver.execute_cdp_cmd("Network.enable", {}) # Enable network tracking, needed for timing results
+driver.execute_cdp_cmd("Network.enable", {}) #Enable network tracking, needed for timing results
+
+#driver.get("http://localhost:8081/") #
 
 
 driver.get("http://localhost:8080/")   #Instruction to open the healthcare website, which is running on localhost:8080 (or other if changed)
+
+
+
+
 
 def clear(): # function to clear browser cache
     print("Clearing the browser cache and cookies...")
@@ -45,29 +52,36 @@ def clear(): # function to clear browser cache
         "origin": "*",
         "storageTypes": "cookies,local_storage,session_storage"
     })
-    print("Cache and cookies cleared successfully!")
+    print("Cache and cookies cleared!")
 
 def test(): # try to extract time value from webpage
     row = {}
     try:
         time_value = driver.execute_script("return time;")  # take value in the "time" variable: -1 if not set, otherwise the time value in ms
+        bust_value = driver.execute_script("return bust;")  # take value in the "bust" variable: -1 if not set, otherwise the bust value in ms
+        is_cached = driver.execute_script("return isCached;")  # take value in the "isCached" variable: false if not set, otherwise true
         print(f"Time value extracted from webpage: {time_value}")
-        row = {"Time": time_value}
+        print(f"Bust value extracted from webpage: {bust_value}")
+        print(f"Is cached value extracted from webpage: {is_cached}")
+        row = {"Time": time_value, "Bust": bust_value, "Is Cached": is_cached}
     except Exception as e:
         print(f"Error: {e}")
 
     time.sleep(0.8)
     try: # try to extract network timings
-        network_value = get_network_timings("parachute.jpeg")
+        network_value = get_network_timings("parachute.jpeg") #This is the resource we want the timings for
         if network_value != []:
-            print(f"Network timings extracted: {network_value}")
-            row.update(network_value[0])  
-            #write_to_excel(network_value[0], FILENAME, ["Queued", "Stalled", "DNS Lookup", "Initial Connection", "SSL", "Request Sent", "Waiting", "Download"])
+            print(f"Network timings extracted: {network_value}") #Here we have the times for both normal and cache bust requests, we save only the normal values
+            for key in network_value[0]:
+                if(network_value[0][key] < 0 or network_value[0][key] > 900): # if the value is negative or greater, we set it to 0, as it is not a valid timing
+                    network_value[0][key] = 0 # replace negative values with 0, as they are not valid timings (happends if times are so small for memCache that they are rounded to 0), program cant handle these microseconds
+                    print(f"Warning: {key} value is negative, setting to 0")
+                row[key] = network_value[0][key] # add the timings to the row
         else:
             print("No network timings found for the specified Pic.")
     except Exception as e:
-        print(f"Error while getting network timings: {e}")    
-    write_to_excel(row, FILENAME, ["Time", "Queued", "Stalled", "DNS Lookup", "Initial Connection", "SSL", "Request Sent", "Waiting", "Download"])
+        print(f"Error while getting network timings: {e}")
+    write_to_excel(row, FILENAME, ["Time", "Bust", "Is Cached", "Queued", "Stalled", "DNS Lookup", "Initial Connection", "SSL", "Request Sent", "Waiting", "Download"])
     time.sleep(10)
 
 # Attempt to automate the timing extraction process, opposed to manual testing and noting of timings 
@@ -96,7 +110,7 @@ def get_network_timings(target_url_substring): # function to get network timings
     logs = driver.get_log("performance") # Get performance logs from Selenium WebDriver
     timings = []
 
-    for entry in logs: # Iterate through each log entry, much help from ChatGPT(https://chatgpt.com/) to understand the structure of the logs and get right values
+    for entry in logs: # Iterate through each log entry, much help from ChatGPT(https://chatgpt.com/) to develop and understand the structure of the logs and get right values
         msg = json.loads(entry["message"])["message"]
 
         if msg["method"] == "Network.responseReceived": 
@@ -141,7 +155,7 @@ def get_network_timings(target_url_substring): # function to get network timings
         })
     return results
 
-def write_to_excel(data, filename="time_output.xlsx", column=None): 
+def write_to_excel(data, filename="time_output.xlsx", column=None): #our results are in the parameter "data", which is a dictionary with the keys as column names
     df = pd.DataFrame([data], columns=column)
     try:
         with pd.ExcelWriter(filename, mode='a', if_sheet_exists='overlay', engine='openpyxl') as writer:
@@ -166,7 +180,7 @@ while True:
 
 while True:
     try:
-        clear_cache_bool = input("Do you want to clear the browser cache before each test? (y/n, default y): ").strip().lower() or "y"
+        clear_cache_bool = input("Do you want to clear the browser cache before each test? (y/n, default y): ").strip().lower() or "y" #wait for user input, should cache be cleared
         if clear_cache_bool in ["yes", "no", "y", "n"]: # validate input
             if clear_cache_bool in ["yes", "y"]:
                 clear_cache_bool = True
