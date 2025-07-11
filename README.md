@@ -19,7 +19,7 @@ This project supports the case study and practical evaluation for the thesis **"
 ├── Website/                 # Realistic case study web app
 │   ├── Healthcare/          # Healthcare system
 │   └── Parachute/           # Parachute system
-├── runWebsites.py           # Backup script to launch both mock web apps simultaneously
+├── runWebsites.py           # Backup script to launch both web apps simultaneously
 ├── README.md                # This file
 
 ```
@@ -35,7 +35,7 @@ This project supports the case study and practical evaluation for the thesis **"
 | `time_data.xlsx`, etc.           | Raw and filtered timing measurements for various caching strategies.                         |
 | `boxplot_*.png`                  | Visual runtime comparisons between configurations (cached, no cache, etc.).                  |
 | `Comparison Server.png`          | Summary visualization comparing systems.                                                     |
-| `time_output.xlsx`               | Final formatted timing results, used in Table \ref{tab\:case\_study\_results} of the thesis. |
+| `time_output.xlsx`               | Results of website testing                                                                   |
 
 ---
 
