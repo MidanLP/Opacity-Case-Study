@@ -1,0 +1,176 @@
+{
+  "clocks": 1,
+  "states": [
+    {
+      "name": "InitConnection",
+      "initial": true,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "MainPage",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+   
+    {
+      "name": "Contact",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "RiskAssessment",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "CacheLoad",
+      "initial": false,
+      "accepting": false,
+      "secret": true
+    },
+    {
+      "name": "DownLoad",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "DisplayRisk",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "CloseConnection",
+      "initial": false,
+      "accepting": true,
+      "secret": false
+    }
+  ],
+  "transitions": [
+    {
+      "origin": "InitConnection",
+      "target": "MainPage",
+      "symbol": "\u03b5",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+
+    {
+      "origin": "MainPage",
+      "target": "Contact",
+      "symbol": "b",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "MainPage",
+      "target": "CloseConnection",
+      "symbol": "exit",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "MainPage",
+      "target": "RiskAssessment",
+      "symbol": "c",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "RiskAssessment",
+      "target": "CacheLoad",
+      "symbol": "\u03b5",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "RiskAssessment",
+      "target": "DownLoad",
+      "symbol": "\u03b5",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "CacheLoad",
+      "target": "DisplayRisk",
+      "symbol": "\u03b5",
+      "guards": [{
+        "clock": 0,
+        "lower": 80.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "DownLoad",
+      "target": "DisplayRisk",
+      "symbol": "\u03b5",
+      "guards": [{
+        "clock": 0,
+        "lower": 400.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+
+      "origin": "DisplayRisk",
+      "target": "MainPage",
+      "symbol": "back",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+    "resets": [
+      0
+    ]
+  }
+
+  ]
+}

@@ -1,0 +1,354 @@
+{
+  "clocks": 1,
+  "states": [
+    {
+      "name": "InitConnection",
+      "initial": true,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "MainPage",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+   
+    {
+      "name": "AboutUs",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "RiskAssessment",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "CacheQuery",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "CacheQueue",
+      "initial": false,
+      "accepting": false,
+      "secret": true
+    },
+    {
+      "name": "CacheRequest",
+      "initial": false,
+      "accepting": false,
+      "secret": true
+    },
+    {
+      "name": "ImgDownloadCache",
+      "initial": false,
+      "accepting": false,
+      "secret": true
+    },
+    {
+      "name": "Queue",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "DnsLookup",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "ServerConnection",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "RequestImg",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "Download",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "CalcRisk",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+    {
+      "name": "RiskPage",
+      "initial": false,
+      "accepting": false,
+      "secret": false
+    },
+
+    {
+      "name": "CloseConnection",
+      "initial": false,
+      "accepting": true,
+      "secret": false
+    }
+  ],
+  "transitions": [
+    {
+      "origin": "MainPage",
+      "target": "AboutUs",
+      "symbol": "a",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "MainPage",
+      "target": "RiskAssessment",
+      "symbol": "b",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "MainPage",
+      "target": "CloseConnection",
+      "symbol": "disc",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "CacheQuery",
+      "target": "Queue",
+      "symbol": "miss",
+      "guards": [{
+        "clock": 0,
+        "lower": 60.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "AboutUs",
+      "target": "MainPage",
+      "symbol": "back",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "RiskAssessment",
+      "target": "MainPage",
+      "symbol": "back",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "CalcRisk",
+      "target": "RiskPage",
+      "symbol": "\u03b5",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "InitConnection",
+      "target": "MainPage",
+      "symbol": "\u03b5",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "RiskPage",
+      "target": "MainPage",
+      "symbol": "back",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "RiskAssessment",
+      "target": "CacheQuery",
+      "symbol": "\u03b5",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.7,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+     {
+      "origin": "Queue",
+      "target": "DnsLookup",
+      "symbol": "prio2",
+      "guards": [{
+        "clock": 0,
+        "lower": 100.0,
+        "upper": 99999
+      }],
+      "resets": []
+    },
+    {
+      "origin": "DnsLookup",
+      "target": "ServerConnection",
+      "symbol": "s3",
+      "guards": [{
+        "clock": 0,
+        "lower": 100.0,
+        "upper": 99999
+      }],
+      "resets": []
+    },
+   
+    {
+      "origin": "ServerConnection",
+      "target": "RequestImg",
+      "symbol": "r",
+      "guards": [{
+        "clock": 0,
+        "lower": 390.0,
+        "upper": 99999
+      }],
+      "resets": []
+    },
+    {
+      "origin": "RequestImg",
+      "target": "Download",
+      "symbol": "s",
+      "guards": [{
+        "clock": 0,
+        "lower": 390.5,
+        "upper": 99999
+      }],
+      "resets": []
+    },
+    {
+      "origin": "Download",
+      "target": "CalcRisk",
+      "symbol": "\u03b5",
+      "guards": [{
+        "clock": 0,
+        "lower": 391.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "CacheQuery",
+      "target": "CacheQueue",
+      "symbol": "hitCache",
+      "guards": [{
+        "clock": 0,
+        "lower": 60.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "CacheQueue",
+      "target": "CacheRequest",
+      "symbol": "prio1",
+      "guards": [{
+        "clock": 0,
+        "lower": 60.0,
+        "upper": 99999
+      }],
+      "resets": []
+    },
+    {
+      "origin": "CacheRequest",
+      "target": "Queue",
+      "symbol": "f",
+      "guards": [{
+        "clock": 0,
+        "lower": 0.0,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    },
+    {
+      "origin": "CacheRequest",
+      "target": "ImgDownloadCache",
+      "symbol": "s2",
+      "guards": [{
+        "clock": 0,
+        "lower": 81,
+        "upper": 99999
+      }],
+      "resets": []
+    },
+    {
+      "origin": "ImgDownloadCache",
+      "target": "CalcRisk",
+      "symbol": "\u03b5",
+      "guards": [{
+        "clock": 0,
+        "lower": 81,
+        "upper": 99999
+      }],
+      "resets": [
+        0
+      ]
+    }
+  ]
+}
