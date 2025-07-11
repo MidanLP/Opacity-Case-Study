@@ -13,16 +13,15 @@ This project supports the case study and practical evaluation for the thesis **"
 ### File Overview
 
 ```
-├── Testing/                  # Scripts and datasets for runtime measurement and simulation
-│   └── Times/               # Timing results, processed data, plots, and boxplots
-├── Theory/                  # Theoretical models used in the thesis
-│   └── Automata.txt         # Definition of the abstract timed automaton model
+├── Testing/                 # Scripts and datasets for runtime measurement and simulation
+    └── time_output.xlsx     # Final output timing data               
+├── Theory/                  # Theoretical models used in the thesis       
 ├── Website/                 # Realistic case study web app
-│   ├── Healthcare/          # Simulated healthcare system
-│   └── Parachute/           # Simulated parachute deployment system
-├── runWebsites.py           # Script to launch both mock web apps simultaneously
+│   ├── Healthcare/          # Healthcare system
+│   └── Parachute/           # Parachute system
+├── runWebsites.py           # Backup script to launch both mock web apps simultaneously
 ├── README.md                # This file
-└── time_output.xlsx         # Final output timing data
+
 ```
 
 | File / Script                    | Description                                                                                  |
@@ -48,6 +47,8 @@ For a more detailed tutorial, see:
 - [DigitalOcean Apache Guide](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-20-04)
 
 but make sure to add our scripts, files and folders and update all paths and links accordingly
+
+For a quick setup that uses python instead of Apache see Backup
 
 To set up the case study:
 
@@ -116,31 +117,10 @@ sudo a2ensite healthcare.conf
 sudo systemctl restart apache2
 ```
 
-### 7. (Optional) Set Up Local Domain
-
-#### Linux/macOS:
-
-```bash
-sudo nano /etc/hosts
+### Backup 
 ```
-
-Add:
-
+python .\Website\runWebsites.py    
 ```
-127.0.0.1    healthcare.local
-```
-
-#### Windows:
-
-Edit `C:\Windows\System32\drivers\etc\hosts` as Administrator and add:
-
-```
-127.0.0.1    healthcare.local
-```
-
-Then visit: `http://healthcare.local:8080` or `http://localhost:8080`
-
----
 
 ## 📂 Dependencies
 
