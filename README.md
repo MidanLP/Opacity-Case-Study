@@ -6,7 +6,7 @@ This project supports the case study and practical evaluation for the thesis **"
 ## Project Structure
 
 - `Testing/` – Contains files and scipts for testing of the Website
-//- `Theory/` – Includes theoretical explanations and resources related to opacity.
+- `Theory/` – Includes theoretical explanations and resources related to opacity.
 - `Website/` – Holds the complete website files showcasing the case study and scipts to easily host and test the websites
 
 ## File Overview 
@@ -46,20 +46,22 @@ To view the case study:
 
 ##  Dependencies
 Testing: 
--Python
--Pandas
--Selenium Webdriver (Chrome)
--Mathplot lib
--ChromeDiverManager
+   - Python 
+   - Pandas
+   - Selenium Webdriver (Chrome)
+   - Mathplot lib
+   - ChromeDriverManager
+ 
 
 ## Testing
    1. Make sure all needed Programs (see Dependencies) are installed and ready to use
    2. navigate to the folder "testing"
-   3. open the Test_Website.py script and ensure all paths are set correctly, and the link to the Healthcare website is correct (if followed setup correctly the website shoudl be able to access the image)
-   4. run ´´´python .\Test_Website.py
-   5. input number of test runs (default 1)
-   6. input yes/no, if you want the cache to be cleared inbetween tests
-   7. Check Results in "time_output.xlsx" (if not changed), in the sheet "Testing Times" (if not changed)
+   3. open the Test_Website.py script and ensure all paths are set correctly, and the link to the Healthcare website is correct (if followed setup correctly the website should be able to access the image)
+   4. ```bash
+      python .\Test_Website.py
+   6. input number of test runs (default 1)
+   7. input yes/no, if you want the cache to be cleared inbetween tests
+   8. Check Results in "time_output.xlsx" (if not changed), in the sheet "Testing Times" (if not changed)
 
 Notes:
    - Do not have the requried Excel file open, the programm wont be able to run
