@@ -32,7 +32,6 @@ This project supports the case study and practical evaluation for the thesis **"
 | `index.html` (under each system) | Frontend interface for the respective case study applications.                               |
 | `createBoxplot.py`               | Generates performance comparison plots from recorded timing data.                            |
 | `Test_Website.py`                | Used to programmatically test server response and simulate client behavior.                  |
-| `time_data.xlsx`, etc.           | Raw and filtered timing measurements for various caching strategies.                         |
 | `boxplot_*.png`                  | Visual runtime comparisons between configurations (cached, no cache, etc.).                  |
 | `Comparison Server.png`          | Summary visualization comparing systems.                                                     |
 | `time_output.xlsx`               | Results of website testing                                                                   |
