@@ -60,7 +60,8 @@ Testing:
    5. input number of test runs (default 1)
    6. input yes/no, if you want the cache to be cleared inbetween tests
    7. Check Results in "time_output.xlsx" (if not changed), in the sheet "Testing Times" (if not changed)
-#Notes:
+
+Notes:
    - Do not have the requried Excel file open, the programm wont be able to run
    - For the first test on a fresh iteration, the image will not be cached, as the script opens a fresh window and has a new cache and cookie storage
-   - If the image is in the mem cache (happends if the image is loaded alot), the program will not be able to get acurate values, as it does not have the required sensitivity to detect microseconds accuartly 
+   - If the image is in the mem cache (happends if the image is loaded alot), the program will not be able to get acurate values, as it does not have the required sensitivity to detect microseconds accurately 
