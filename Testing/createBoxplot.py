@@ -9,9 +9,9 @@ df1 = pd.read_excel("time_output.xlsx", sheet_name="Testing Timings")
 
 plt.figure(figsize=(8, 6))
 
-plt.boxplot(df1["Time"].dropna(), vert=True, patch_artist=True, positions=[1], widths=0.6, labels=["normal Time"])
+plt.boxplot(df1["Time"].dropna(), vert=True, patch_artist=True, positions=[1], widths=0.6, labels=["normal Time"]) #Values vor standard  measurement
 
-plt.boxplot(df1["Bust"].dropna(), vert=True, patch_artist=True, positions=[2], widths=0.6, labels=["bust Time"])
+plt.boxplot(df1["Bust"].dropna(), vert=True, patch_artist=True, positions=[2], widths=0.6, labels=["bust Time"]) #Values vor Cache-Bust measurement
 
 #plt.boxplot(df3["Time_Value"].dropna(), vert=True, patch_artist=True, positions=[3], widths=0.6, labels=["Server, cache"])
 
